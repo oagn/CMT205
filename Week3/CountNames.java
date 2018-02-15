@@ -8,12 +8,17 @@ public class CountNames {
         String[] names = {"Tommy Lee Jones", "William Hurt", "Nicole Kidman",
             "Catherine Zeta-Jones", "JAMES EARL JONES", "Tom Hardy",
             "Judi Dench", "Sean Bean", "Carey Mulligan", "Toby Jones" };
-        int count = 0;
+        int count1 = 0;
+				int count2 = 0;
 				for (String name :names){
 					if (name.contains("Jones")){
-						count++;
+						count1++;
+					}
+					if (name.toUpperCase().contains("JONES")){
+						count2++;
 					}
 				}
-				System.out.println(count);
+				System.out.println(count1);
+				System.out.println(count2);
 	}
 }
