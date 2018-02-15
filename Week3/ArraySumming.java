@@ -4,6 +4,11 @@
 
 public class ArraySumming{
   public static void main (String[] args){
-
+    int[] forSumming = {3,5,7,9,10};
+    int theSum = 0;
+    for(int number :forSumming){
+      theSum += number;
+    }
+    System.out.println(theSum);  
   }
 }
