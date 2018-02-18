@@ -15,6 +15,12 @@ public class BankAccount {
         this.balance = 0.0;
     }
 
+    public BankAccount(String holderName, String number, String balance){
+        this.holderName = holderName;
+        this.number = number;
+        this.balance = Double.parseDouble(balance);
+    }
+
     /// Accessor for name of the accoun holder
     public String getName(){
         return holderName;

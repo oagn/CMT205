@@ -5,7 +5,7 @@ public class BankTest{
     public static void main(String[] args){
         // Create a new account
         System.out.println("\nSTEP 1:\n Create a new bank account.");
-        BankAccount a = new BankAccount(args[0], args[1]);
+        BankAccount a = new BankAccount(args[0], args[1], args[2]);
         System.out.println(a);
 
         // Get and set names
