@@ -8,7 +8,7 @@ public class RoomCarpet{
     }
 
     public double getTotalCost( ){
-        return size.getArea*cost;
+        return size.getArea()*carpetCost;
     }
 
     @Override
