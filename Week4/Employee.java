@@ -72,4 +72,9 @@ public class Employee{
         this.position = position;
     }
 
+    @override
+    public String toString( ){
+        return name + "\t(" + idNumber + ")\t" + department + "\t" + position;= "";
+    }
+
 }
