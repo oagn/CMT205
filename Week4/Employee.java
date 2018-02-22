@@ -20,4 +20,20 @@ public class Employee{
         position = "";
     }
 
+    public Employee( String name, int idNumber ){
+        // Constructor that takes name and idNumber
+        this.name = name;
+        this.idNumber = idNumber;
+        department = "";
+        position = "";
+    }
+
+    public Employee( String name, int idNumber, String department, String position ){
+        // Constructor taking all instance variable values as input
+        this.name = name;
+        this.idNumber = idNumber;
+        this.department = department;
+        this.position = position;
+    }
+
 }
