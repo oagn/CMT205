@@ -4,15 +4,15 @@ public class RoomCarpet{
 
     public RoomCarpet( RoomDimension dim, double cost ){
         size = dim;
-        carpetCost = cost;
+        carpetCost = getTotalCost(cost);
     }
 
-    public double getTotalCost( ){
+    public double getTotalCost( double carpetCost ){
         return size.getArea()*carpetCost;
     }
 
     @Override
     public String toString( ){
-        return "Size: " + size + ", Cost: " + carpetCost;
+        return "Size: " + size + ", Cost: " + carpetCost + "\n";
     }
 }
