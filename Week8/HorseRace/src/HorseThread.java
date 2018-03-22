@@ -14,6 +14,7 @@ public class HorseThread extends Thread{
 	private int horseID;
 	private int dist;
 	private int steps;
+	private static int[] horseResults = new int[10];
 	// Constants
 	private static final int DISTANCE = 1000;
 	private static final int DELAY = 10;
@@ -43,10 +44,13 @@ public class HorseThread extends Thread{
 				// Move between 1 and 6 meters
 		        dist += generator.nextInt(6) + 1;
 		        steps += 1;
+		        
 		        // sleep for 10 milliseconds
 		        Thread.sleep( DELAY );
 			}
 			System.out.println("Horse ID: "+ horseID + " Steps: " + steps);
+			horseResults[horseID] = steps;
+			
 		}
 		// exception generated if sleeping thread is
 		// interrupted
@@ -56,5 +60,8 @@ public class HorseThread extends Thread{
 		}
 	}
 	
+	public static int[] getResults() {
+		return horseResults;
+	}	
 }
 
