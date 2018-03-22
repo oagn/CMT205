@@ -1,3 +1,5 @@
+import java.util.Arrays;
+
 public class Buffer{
 	//Variables
 	private int head;
@@ -12,28 +14,43 @@ public class Buffer{
 	}
 	
 	public synchronized int get() {
-		int returnVal;
-		if( isEmpty() ) {
-			throw new RuntimeException("The buffer is empty!");
+		int returnVal = -1;
+		try {
+			if( isEmpty() ) {
+				throw new RuntimeException("The buffer is empty!");
+			}
+			else {
+				returnVal = values[head];
+				values[head] = 0;
+				head = (head + 1) % BUFFER_SIZE;
+				count += 1;
+				
+				System.out.print( "Getting " + returnVal );
+			    System.out.println( ", current buffer: "+ Arrays.toString(values));
+			}
 		}
-		else {
-			returnVal = values[head];
-			values[head] = 0;
-			head = (head + 1) % BUFFER_SIZE;
-			count += 1;
-			
-			return returnVal;
+		catch(RuntimeException e){
+			System.out.println(e);
 		}
+		return returnVal;
 	}
 	
 	public synchronized void put(int val) {
-		int pos = (head + count) % BUFFER_SIZE;
-		if( isFull() ) {
-			throw new RuntimeException("The buffer is full!");
+		int pos = (head + BUFFER_SIZE - count) % BUFFER_SIZE;
+		try {
+			if( isFull() ) {
+				throw new RuntimeException("The buffer is full!");
+			}
+			else{
+				values[pos] = val;
+				count -= 1;
+				
+				System.out.print( "Adding " + val );
+			    System.out.println( ", current buffer: "+ Arrays.toString(values));
+			}
 		}
-		else{
-			values[pos] = val;
-			count -= 1;
+		catch(RuntimeException e){
+			System.out.println(e);
 		}
 	}
 	
@@ -54,5 +71,4 @@ public class Buffer{
 			return false;
 		}
 	}
-
 }
