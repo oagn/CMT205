@@ -1,0 +1,105 @@
+.root{
+    -fx-background-color: aliceblue;
+    -fx-font-size: 11pt;
+}
+
+.label{
+    -fx-text-fill: black;
+}
+
+.button{
+    -fx-background-color: linear-gradient(#dc9556, #ab4642);
+    -fx-background-radius: 100;
+}
+
+/* Menu styling */
+.menu-bar {
+    -fx-background-color: lightyellow;
+}
+
+.menu {
+
+}
+
+.menu:showing {
+    -fx-background-color: lightgoldenrodyellow;
+}
+
+.menu .label {
+    -fx-alignment: CENTER;
+    -fx-text-fill: black;
+    -fx-font-weight: bold;
+}
+
+/* Tab pane and tab styling */
+.tab-pane .tab-header-area .tab-header-background {
+    -fx-opacity: 100;
+    -fx-background-color: lightyellow;
+}
+
+.tab-pane
+{
+    -fx-background-color: aliceblue;
+    -fx-tab-min-width:130px;
+}
+
+.tab-pane .tab
+{
+    -fx-background-color: skyblue;
+
+}
+
+.tab-pane .tab:selected
+{
+    -fx-background-color: aliceblue;
+}
+
+.tab .tab-label {
+    -fx-alignment: CENTER;
+    -fx-text-fill: #828282;
+    -fx-font-weight: bold;
+}
+
+.tab:selected .tab-label {
+    -fx-alignment: CENTER;
+    -fx-text-fill: black;
+    -fx-font-weight: bold;
+}
+
+/* Grid styling */
+.grid {
+    -fx-background-color: aliceblue;
+    -fx-background-radius: 5.0;
+}
+
+/* Scroll pane styling */
+.scroll-pane > .viewport {
+    -fx-background-color: transparent;
+}
+
+.scroll-pane {
+    -fx-background-color: aliceblue;
+}
+
+/* Chart styling */
+.chart-plot-background{
+    -fx-background-color: transparent;
+}
+
+/* Dialogue box styling */
+.dialog-pane {
+    -fx-background-color: black;
+}
+
+.dialog-pane .label {
+    -fx-text-fill: white;
+}
+
+.dialog-pane .header-panel {
+    -fx-background-color: black;
+}
+
+.dialog-pane .header-panel .label {
+    -fx-font-style: italic;
+    -fx-font-size: 2em;
+}
