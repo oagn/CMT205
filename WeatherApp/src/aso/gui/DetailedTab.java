@@ -1,3 +1,5 @@
+// Student number: c1767198
+
 package aso.gui;
 
 import aso.model.WeatherDataCollection;
@@ -10,7 +12,6 @@ import javafx.scene.chart.*;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.control.Tab;
-import javafx.scene.control.Label;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -20,6 +21,10 @@ import javafx.collections.ObservableList;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Class to create and update the Detail tab in the WÆTHER application.
+ *
+ */
 public class DetailedTab {
 
     private static int year;
@@ -56,6 +61,12 @@ public class DetailedTab {
     private static CategoryAxis rainByYearXAxis = new CategoryAxis();
     private static final BarChart<String, Number> rainfallByYear = new BarChart<>(rainByYearXAxis, rainByYearYAxis);
 
+    /**
+     * Method that creates the Detail tab and sets up the initial charts.
+     * Includes default start station and year: Aberporth and 2017, respectively.
+     * @return Tab, detailTab
+     *
+     */
     public static Tab create(){
         Tab detailTab = new Tab("Detail");
         BorderPane detail = new BorderPane();
@@ -64,9 +75,6 @@ public class DetailedTab {
         HBox hb = new HBox();
         hb.setPadding(new Insets(25));
         hb.setSpacing(30);
-
-        Label stationName = new Label();
-        stationName.setText("Station: ");
 
         station = "Aberporth";
         year = 2017;
@@ -112,7 +120,7 @@ public class DetailedTab {
             }
         });
 
-        hb.getChildren().addAll(stationName, cbStations, cbYears);
+        hb.getChildren().addAll(cbStations, cbYears);
         detail.setTop(hb);
 
         // Create charts
@@ -131,50 +139,66 @@ public class DetailedTab {
         // VBox to place charts for selected year in
         VBox vbYear = new VBox();
         vbYear.setPadding(new Insets(10, 0, 10, 0));
-        vbYear.setSpacing(10);
+        vbYear.setSpacing(25);
+        vbYear.setPrefWidth(450);
+        vbYear.setMinWidth(450);
+        vbYear.setMaxWidth(450);
 
         // 1.a. Temperature comparison (line chart)
         String compTempYLabel = "Temperature [" + DEGREE + "C]";
         String compTempXLabel = "Month";
         compTempxAxis.setLabel(compTempXLabel);
         compTempyAxis.setLabel(compTempYLabel);
+        temperatureComparison.setAnimated(false);
 
         // 1.b. Monthly rain (bar chart)
         String rainYLabel = "Rainfall [mm]";
         String rainXLabel = "Month";
         rainYAxis.setLabel(rainYLabel);
         rainXAxis.setLabel(rainXLabel);
+        rainfall.setAnimated(false);
+        rainfall.setLegendVisible(false);
 
         // 1.c. Monthly air frost days (bar chart)
         String afYLabel = "Air frost [days]";
         String afXLabel = "Month";
         afYAxis.setLabel(afYLabel);
         afXAxis.setLabel(afXLabel);
+        airFrost.setAnimated(false);
+        airFrost.setLegendVisible(false);
 
 
         // 2. Charts for data summarised by year
         // VBox to place charts for summarised/extreme values selected station in
         VBox vbStation = new VBox();
         vbStation.setPadding(new Insets(10, 0, 10, 0));
-        vbStation.setSpacing(10);
+        vbStation.setSpacing(25);
+        vbStation.setPrefWidth(450);
+        vbStation.setMinWidth(450);
+        vbStation.setMaxWidth(450);
 
         // 2.a. Yearly minimum and maximum temperatures
         String tempByYearYLabel = "Temperature [" + DEGREE + "C]";
         String tempByYearXLabel = "Year";
         tempByYearXAxis.setLabel(tempByYearXLabel);
         tempByYearYAxis.setLabel(tempByYearYLabel);
+        temperatureByYear.setAnimated(false);
 
         // 2.b. Yearly rainfall (bar chart)
         String rainByYearYLabel = "Rainfall [mm]";
         String rainByYearXLabel = "Year";
         rainByYearYAxis.setLabel(rainByYearYLabel);
         rainByYearXAxis.setLabel(rainByYearXLabel);
+        rainfallByYear.setAnimated(false);
+        rainfallByYear.setLegendVisible(false);
 
         // 2.c. Yearly air frost days (bar chart)
         String afByYearYLabel = "Air frost [days]";
         String afByYearXLabel = "Year";
         afByYearYAxis.setLabel(afByYearYLabel);
         afByYearXAxis.setLabel(afByYearXLabel);
+        airFrostByYear.setAnimated(false);
+        airFrostByYear.setLegendVisible(false);
 
         // Update weather data
         updateWeatherData(station, year);
@@ -193,6 +217,7 @@ public class DetailedTab {
 
         scroll.setContent(hbCharts);
         scroll.setPannable(true);
+        scroll.getStyleClass().addAll("detail-scroll-pane");
 
         // Add charts to layout
         detail.setCenter(scroll);
@@ -201,21 +226,43 @@ public class DetailedTab {
         return detailTab;
     }
 
+    /**
+     * Method that updates that private WeatherDataCollection, weatherCollection with data for the chosen
+     * station and year. Station data is collected from the loaded WeatherDataMap allStations in the SummaryTab.
+     * This data is filtered by year using the getWeatherDataYear method from WeatherDataCollection and saved in
+     * the weather ArrayList.
+     * @param station, the weather station to view data for
+     * @param year, the year to view data for
+     * @see WeatherDataCollection
+     * @see aso.model.WeatherDataMap
+     *
+     */
     private static void updateWeatherData(String station, int year){
         weatherCollection = SummaryTab.allStations.getCollection(station);
         weather = weatherCollection.getWeatherDataYear(year);
     }
 
+    /**
+     * Method that updates the temperatureComparison line-chart.
+     * Any current data series in the chart will be deleted before new series are added for
+     * each WeatherData instance in the current WeatherData arrayList for that year.
+     * @param station, the weather station to view data for
+     * @param year, the year to view data for
+     * @see WeatherData
+     *
+     */
     private static void updateComparisonTempChart(String station, int year){
 
         if (!temperatureComparison.getData().isEmpty()){
-            System.out.println("Remove Series");
-            temperatureComparison.getData().remove(0);
             temperatureComparison.getData().remove(1);
+            temperatureComparison.getData().remove(0);
         }
 
         XYChart.Series tempComp1 = new XYChart.Series();
         XYChart.Series tempComp2 = new XYChart.Series();
+
+        tempComp1.setName("Maximum");
+        tempComp2.setName("Minimum");
 
         String title = "Temperature in " + station + " (" + year + ") ";
 
@@ -229,10 +276,18 @@ public class DetailedTab {
         temperatureComparison.setTitle(title);
     }
 
+    /**
+     * Method that updates the rainfall bar-chart.
+     * Any current data series in the chart will be deleted before a new series are populated with data from
+     * each WeatherData instance in the current WeatherData arrayList for that year.
+     * @param station, the weather station to view data for
+     * @param year, the year to view data for
+     * @see WeatherData
+     *
+     */
     private static void updateRainChart(String station, int year){
 
         if (!rainfall.getData().isEmpty()){
-            System.out.println("Remove Series");
             rainfall.getData().remove(0);
         }
 
@@ -251,10 +306,18 @@ public class DetailedTab {
 
     }
 
+    /**
+     * Method that updates the airfrost bar-chart.
+     * Any current data series in the chart will be deleted before a new series are populated with data from
+     * each WeatherData instance in the current WeatherData arrayList for that year.
+     * @param station, the weather station to view data for
+     * @param year, the year to view data for
+     * @see WeatherData
+     *
+     */
     private static void updateAFChart(String station, int year){
 
         if (!airFrost.getData().isEmpty()){
-            System.out.println("Remove Series");
             airFrost.getData().remove(0);
         }
 
@@ -273,12 +336,18 @@ public class DetailedTab {
 
     }
 
+    /**
+     * Method that updates the temperatureByYear line-chart.
+     * Any current data series in the chart will be deleted before new series are added for
+     * each WeatherData instance in the current WeatherDataCollection.
+     * @see WeatherData
+     *
+     */
     private static void updateYearlyTempChart(){
 
         if (!temperatureByYear.getData().isEmpty()){
-            System.out.println("Remove Series");
-            temperatureByYear.getData().remove(0);
             temperatureByYear.getData().remove(1);
+            temperatureByYear.getData().remove(0);
         }
 
         String title = "Temperature in " + weatherCollection.getStation();
@@ -300,10 +369,16 @@ public class DetailedTab {
 
     }
 
+    /**
+     * Method that updates the rainfallByYear bar-chart.
+     * Any current data series in the chart will be deleted before new series are added for
+     * each WeatherData instance in the current WeatherDataCollection.
+     * @see WeatherData
+     *
+     */
     private static void updateYearlyRainChart(){
 
         if (!rainfallByYear.getData().isEmpty()){
-            System.out.println("Remove Series");
             rainfallByYear.getData().remove(0);
         }
 
@@ -321,10 +396,16 @@ public class DetailedTab {
 
     }
 
+    /**
+     * Method that updates the airFrostByYear bar-chart.
+     * Any current data series in the chart will be deleted before new series are added for
+     * each WeatherData instance in the current WeatherDataCollection.
+     * @see WeatherData
+     *
+     */
     private static void updateYearlyAFChart(){
 
         if (!airFrostByYear.getData().isEmpty()){
-            System.out.println("Remove Series");
             airFrostByYear.getData().remove(0);
         }
 

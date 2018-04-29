@@ -1,34 +1,31 @@
+/* Student number: c1767198 */
+
 .root{
-    -fx-background-color: aliceblue;
+    -fx-background-color: #004C65;
     -fx-font-size: 11pt;
 }
 
 .label{
-    -fx-text-fill: black;
-}
-
-.button{
-    -fx-background-color: linear-gradient(#dc9556, #ab4642);
-    -fx-background-radius: 100;
+    -fx-text-fill: #004C65;
 }
 
 /* Menu styling */
 .menu-bar {
-    -fx-background-color: lightyellow;
-}
-
-.menu {
-
+    -fx-background-color: #FFFBBB;
 }
 
 .menu:showing {
-    -fx-background-color: lightgoldenrodyellow;
+    -fx-background-color: skyblue;
 }
 
 .menu .label {
     -fx-alignment: CENTER;
     -fx-text-fill: black;
     -fx-font-weight: bold;
+}
+
+.context-menu {
+    -fx-background-color: #8FDEF8;
 }
 
 /* Tab pane and tab styling */
@@ -39,19 +36,18 @@
 
 .tab-pane
 {
-    -fx-background-color: aliceblue;
+    -fx-background-color: #004C65;
     -fx-tab-min-width:130px;
 }
 
 .tab-pane .tab
 {
     -fx-background-color: skyblue;
-
 }
 
 .tab-pane .tab:selected
 {
-    -fx-background-color: aliceblue;
+    -fx-background-color: #004C65;
 }
 
 .tab .tab-label {
@@ -62,23 +58,38 @@
 
 .tab:selected .tab-label {
     -fx-alignment: CENTER;
-    -fx-text-fill: black;
+    -fx-text-fill: #8FDEF8;
     -fx-font-weight: bold;
 }
 
 /* Grid styling */
 .grid {
-    -fx-background-color: aliceblue;
+    -fx-background-color: #004C65;
     -fx-background-radius: 5.0;
 }
 
-/* Scroll pane styling */
-.scroll-pane > .viewport {
+.grid .label {
+    -fx-alignment: CENTER;
+    -fx-text-fill: #8FDEF8;
+    -fx-font-weight: bold;
+}
+
+/* Scroll pane styling for summary tab*/
+.summary-scroll-pane > .viewport {
     -fx-background-color: transparent;
 }
 
-.scroll-pane {
-    -fx-background-color: aliceblue;
+.summary-scroll-pane {
+    -fx-background-image: url("File:src/aso/img/Weather.png");
+}
+
+/* Scroll pane styling for detail tab*/
+.detail-scroll-pane > .viewport {
+    -fx-background-color: transparent;
+}
+
+.detail-scroll-pane {
+    -fx-background-color: #004C65;
 }
 
 /* Chart styling */
@@ -86,20 +97,82 @@
     -fx-background-color: transparent;
 }
 
+.chart-legend {
+    -fx-background-color: #8FDEF8;
+}
+
+.chart-legend-item{
+    -fx-text-fill: #004C65;
+}
+
+.chart-title {
+    -fx-text-fill: #8FDEF8;
+    -fx-font-size: 1.4em;
+}
+
+.axis-label {
+    -fx-text-fill: #8FDEF8;
+}
+
+.axis {
+    -fx-font-size: 1.2em;
+    -fx-tick-label-fill: #8FDEF8;
+    -fx-tick-length: 20;
+    -fx-minor-tick-length: 10;
+}
+
+.chart-bar {
+    -fx-bar-fill: #ff80aa;
+    -fx-background-insets: 0,1,2;
+}
+
+.chart-series-line {
+    -fx-stroke-width: 2px;
+    -fx-effect: null;
+}
+
+.default-color0.chart-series-line { -fx-stroke: #ff80aa; }
+.default-color1.chart-series-line { -fx-stroke: #00ccff; }
+
+.default-color0.chart-line-symbol { -fx-background-color: #ff80aa; }
+.default-color1.chart-line-symbol { -fx-background-color: #00ccff; }
+
 /* Dialogue box styling */
 .dialog-pane {
-    -fx-background-color: black;
+    -fx-background-color: #004C65;
 }
 
 .dialog-pane .label {
-    -fx-text-fill: white;
+    -fx-text-fill: #8FDEF8;
 }
 
 .dialog-pane .header-panel {
-    -fx-background-color: black;
+    -fx-background-color: #004C65;
 }
 
 .dialog-pane .header-panel .label {
     -fx-font-style: italic;
     -fx-font-size: 2em;
+}
+
+/* Choice box styling */
+
+.choice-box {
+    -fx-background-color: #8FDEF8;
+    -fx-mark-color: #004C65;
+}
+.choice-box .context-menu {
+    -fx-background-color: #8FDEF8;
+}
+
+.choice-box .menu-item:focused {
+    -fx-background-color: #00ccff;
+}
+
+.choice-box .menu-item > .label {
+    -fx-text-fill: #004C65;
+}
+
+.choice-box .menu-item:focused > .label {
+    -fx-text-fill: black;
 }

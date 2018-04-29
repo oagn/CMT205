@@ -1,8 +1,10 @@
+// Student number: c1767198
+
 package aso.gui;
 
 import aso.util.ReportExporter;
 import aso.model.WeatherDataMap;
-import aso.model.WeatherDataCollection;
+
 import javafx.stage.Stage;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
@@ -21,13 +23,25 @@ import javafx.beans.property.*;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.application.Platform;
-import java.util.ArrayList;
 
-import java.io.IOException;
 import java.util.List;
 
+/**
+ * Class for creation, layout and controll of the WÆTHER application menu.
+ * The menu bar has two menus:
+ * File and View;
+ * The File menu can open the Summary File Exporter or close the application.
+ * The View menu provides functionality to change the year of the data displayed in the Summary Tab.
+ *
+ */
 public class AppMenu {
 
+    /**
+     * Method to create the menu bar, menus and define control of each item.
+     * @param primaryStage the primary stage of the application
+     * @param scene the initial scene of the application
+     * @param root the border pane to insert the app menu into
+     */
     public static void create( Stage primaryStage, Scene scene, BorderPane root) {
 
         final StringProperty statusProperty = new SimpleStringProperty();
@@ -84,14 +98,12 @@ public class AppMenu {
             }
         });
 
-        // View menu, Summary Year, Detail Station
+        // View menu, Summary Year choice
         Menu viewMenu = new Menu("_View");
-        viewMenu.setMnemonicParsing(true);
         menuBar.getMenus().add(viewMenu);
 
         // Get station data from summary tab
         WeatherDataMap allWeather = SummaryTab.allStations;
-        List<String> stations = allWeather.getStationNames();
         List<Integer> years = allWeather.getYears();
 
         Menu summaryItem = new Menu("_Summary Year");
@@ -101,8 +113,9 @@ public class AppMenu {
                 KeyCombination.SHORTCUT_DOWN));
 
         viewMenu.getItems().add(summaryItem);
-        // Create station selector
-        //Submenu for choice of year in summary tab
+
+        // Create Year selector
+        // Submenu for choice of year in summary tab
         final ToggleGroup allYears = new ToggleGroup();
 
         for ( int year : years) {
@@ -117,40 +130,11 @@ public class AppMenu {
             public void changed(ObservableValue<? extends Toggle> ov, Toggle old_toggle, Toggle new_toggle) {
                 if (allYears.getSelectedToggle() != null) {
                     int year = (int) allYears.getSelectedToggle().getUserData();
-                    SummaryTab.updateGrid(year, "data/");
+                    SummaryTab.updateGrid(year);
                 }
             }
         });
 
-
-        Menu detailItem = new Menu("_Detail Station");
-        detailItem.setMnemonicParsing(true);
-
-        detailItem.setAccelerator(new KeyCodeCombination(KeyCode.D,
-                KeyCombination.SHORTCUT_DOWN));
-
-        // Create station selector
-        //Submenu for choice of year in summary tab
-        final ToggleGroup allStations = new ToggleGroup();
-
-        for ( String station : stations) {
-            RadioMenuItem stationItem = new RadioMenuItem(station);
-            stationItem.setToggleGroup(allStations);
-            stationItem.setUserData(station);
-            detailItem.getItems().add(stationItem);
-        }
-
-        //Processing summary menu item selection
-        allStations.selectedToggleProperty().addListener(new ChangeListener<Toggle>() {
-            public void changed(ObservableValue<? extends Toggle> ov, Toggle old_toggle, Toggle new_toggle) {
-                if (allStations.getSelectedToggle() != null) {
-                    String station = allStations.getSelectedToggle().getUserData().toString();
-                    System.out.println("Showing details for: " + station);
-                }
-            }
-        });
-
-        viewMenu.getItems().add(detailItem);
     }
 
 }

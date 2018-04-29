@@ -1,3 +1,4 @@
+// Student number: c1767198
 package aso.util;
 
 import javafx.stage.Stage;
@@ -7,12 +8,14 @@ import javafx.scene.layout.VBox;
 import javafx.scene.layout.HBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
+import javafx.scene.text.Text;
 import javafx.scene.control.Label;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.control.DialogPane;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.paint.Color;
 import javafx.geometry.Pos;
 import javafx.geometry.Insets;
 import javafx.event.ActionEvent;
@@ -23,13 +26,25 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
-
+/**
+ * Class that manages the report exporter stage, separate from the main stage of the WÆTHER application.
+ * Sets up the main layout and creates listeners for the info and save buttons.
+ *
+ */
 public class ReportExporter {
 
     private static TextField textFld;
     private static final String titleTxt = "Summary File Exporter";
+    private static Text actionStatus;
     static private File saveFile;
 
+    /**
+     * Method to set up the main layout of the report exporter.
+     * This method implements a DirectoryChooser to get the directory to save the report in
+     * from the user.
+     * @return Stage reportStage.
+     *
+     */
     public static Stage reportDialogue() {
         Stage reportStage = new Stage();
         reportStage.setTitle(titleTxt);
@@ -41,6 +56,10 @@ public class ReportExporter {
         textFld.setMinHeight(30.0);
         textFld.setPromptText("Please select a directory");
         textFld.setPrefColumnCount(15);
+        // Status message text
+        actionStatus = new Text();
+        actionStatus.setFont(Font.font("Calibri", FontWeight.NORMAL, 14));
+        actionStatus.setFill(Color.AZURE);
         Button selectBtn = new Button("Select");
 
         // Get picture from filesystem, using fileChooser
@@ -76,11 +95,12 @@ public class ReportExporter {
         VBox vbox = new VBox(30);
         vbox.setPadding(new Insets(25, 25, 25, 25));
         ;
-        vbox.getChildren().addAll(hbox, buttonHb);
+        vbox.getChildren().addAll(hbox, buttonHb, actionStatus);
 
         // Scene
         Scene scene = new Scene(vbox, 500, 200); // w x h
         reportStage.setScene(scene);
+        scene.getStylesheets().add("file:src/aso/css/Style.css");
 
         // Initial
         infobtn.requestFocus();
@@ -88,6 +108,12 @@ public class ReportExporter {
         return reportStage;
     }
 
+    /**
+     * Listener class for the Info button.
+     * When the info button is pressed, an INFO alert is shown, conveying information
+     * about the contents of tje report that will be exported.
+     *
+     */
     private static class InfoButtonListener implements EventHandler<ActionEvent> {
 
         @Override
@@ -112,6 +138,13 @@ public class ReportExporter {
         }
     }
 
+    /**
+     * Listener class for the Save button.
+     * Error handling. Checks whether a path has been entered before trying to save the summary.
+     * If there is no path an ERROR alert box will pop up.
+     * If there is a path the saveFile method is called and a success message is displayed.
+     *
+     */
     private static class SaveButtonListener implements EventHandler<ActionEvent> {
         @Override
         public void handle(ActionEvent e) {
@@ -128,6 +161,10 @@ public class ReportExporter {
                 String s = "Please choose a folder";
                 alert.setContentText(s);
 
+                DialogPane dialogPane = alert.getDialogPane();
+                dialogPane.getStylesheets().add("file:src/aso/css/Style.css");
+                dialogPane.getStyleClass().add("dialog-pane");
+
                 alert.showAndWait();
             }
 
@@ -137,10 +174,17 @@ public class ReportExporter {
 
             if (valid){
                 SaveFile(path);
+                actionStatus.setText("Report saved in: " + path);
             }
         }
     }
 
+    /**
+     * Method to create the WÆTHER report and write it to the file system
+     * @param path, the full path to write the summary to
+     * @see ReportCreator
+     *
+     */
     private static void SaveFile(String path) {
 
         ArrayList<String> report = ReportCreator.createReport();

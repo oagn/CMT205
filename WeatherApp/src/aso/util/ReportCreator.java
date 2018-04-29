@@ -1,3 +1,4 @@
+// Student number: c1767198
 package aso.util;
 
 import aso.gui.SummaryTab;
@@ -6,10 +7,21 @@ import aso.model.WeatherDataCollection;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Class that manages the creation of a weather summary report.
+ *
+* */
 public class ReportCreator {
 
     private static final String DEGREE = "\u00b0";
 
+    /**
+     * Method to create summary report ArrayList, add an explanatory header
+     * and data from WeatherDataMap allStations from the SummaryTab.
+     * @return ArrayList of Strings, containing station data
+     * @see aso.model.WeatherDataMap
+     *
+     * */
     public static ArrayList<String> createReport(){
         ArrayList<String> report = new ArrayList<>();
 
@@ -75,8 +87,6 @@ public class ReportCreator {
 
             sequenceNumber += 1;
         }
-
-
         return report;
     }
 }

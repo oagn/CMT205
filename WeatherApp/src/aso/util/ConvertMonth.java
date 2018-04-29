@@ -1,7 +1,11 @@
+// Student number: c1767198
 package aso.util;
 
 import java.text.DateFormatSymbols;
 
+/**
+ * Class for formatting of months
+ */
 public class ConvertMonth {
 
     /**

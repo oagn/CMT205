@@ -1,3 +1,5 @@
+// Student number: c1767198
+
 package aso.gui;
 
 import aso.model.WeatherDataMap;
@@ -9,14 +11,23 @@ import javafx.scene.control.ScrollPane.ScrollBarPolicy;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
-import javafx.scene.text.Text;
 
+/**
+ * Class to create and update the Detail tab in the WÆTHER application.
+ *
+ */
 public class SummaryTab {
 
     private static GridPane summaryGridPane;
     public static WeatherDataMap allStations;
     private static final String DEGREE = "\u00b0";
 
+    /**
+     * Method that creates the Summary tab and sets up the initial grid
+     * Includes default year 2017.
+     * @return Tab, summaryTab
+     *
+     */
     public static Tab create(){
         Tab summaryTab = new Tab("Summary");
 
@@ -36,11 +47,16 @@ public class SummaryTab {
         column2.setHgrow(Priority.ALWAYS);
         summaryGridPane.getColumnConstraints().addAll(column1, column2);
 
-        updateGrid(2017, "data/");
+        // Load all data from folder
+        allStations = new WeatherDataMap( );
+        allStations.loadCollections("data/", Boolean.FALSE);
+
+        updateGrid(2017);
 
         summaryTab.setContent(scroll);
         scroll.setContent(summaryGridPane);
         scroll.setPannable(true);
+        scroll.getStyleClass().addAll("summary-scroll-pane");
 
         summaryGridPane.getStyleClass().addAll("grid");
         return summaryTab;
@@ -48,10 +64,15 @@ public class SummaryTab {
     }
 
     /**
-     * Method to update grid pane with weather summary data for a given year
+     * Method to update grid pane with weather summary data for a given year.
+     * Any data in the grid will first be removed, before an ArrayList of
+     * WeatherDataCollections is retrieved from the WeatherDataMap, and
+     * summary statistics is calculated and populated into the grid.
      * @param year, the year that the user wants to view data for
+     * @see WeatherDataCollection
+     * @see WeatherDataMap
      */
-    public static void updateGrid( int year, String folder) {
+    public static void updateGrid( int year) {
         // Remove current contents of grid
         try {
             summaryGridPane.getChildren().clear();
@@ -63,17 +84,11 @@ public class SummaryTab {
         intro.setText("Welcome to WÆTHER\n\nSUMMARY DATA FOR "+ year);
         summaryGridPane.add(intro,0,0,1,3);
 
-
-
         final Separator sep1 = new Separator();
         sep1.setValignment(VPos.CENTER);
         GridPane.setConstraints(sep1, 0, 3);
         GridPane.setColumnSpan(sep1, 2);
         summaryGridPane.getChildren().add(sep1);
-
-        // Load all data from folder
-        allStations = new WeatherDataMap( );
-        allStations.loadCollections(folder, Boolean.FALSE);
 
         int row = 4;
 
@@ -90,11 +105,11 @@ public class SummaryTab {
             summaryGridPane.add(airFrostLbl, 0, row + 4);
             summaryGridPane.add(rainFallLbl, 0, row + 5);
 
-            Text stationName = new Text();
-            Text minTemperature = new Text();
-            Text maxTemperature = new Text();
-            Text totalAirFrostDays = new Text();
-            Text totalRainFall = new Text();
+            Label stationName = new Label();
+            Label minTemperature = new Label();
+            Label maxTemperature = new Label();
+            Label totalAirFrostDays = new Label();
+            Label totalRainFall = new Label();
 
             // Round to nearest 1 decimal
             double totalRain = Math.round(stationData.getTotalRainFall(year) * 10.0) / 10.0;

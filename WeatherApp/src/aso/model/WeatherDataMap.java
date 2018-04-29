@@ -1,11 +1,17 @@
+// Student number: c1767198
+
 package aso.model;
 
 import java.io.File;
-import java.io.FilenameFilter;
 import java.util.ArrayList;
 import java.util.List;
 import org.apache.commons.io.FilenameUtils;
 
+/**
+ * Class for management of the third level of the WÆTHER app data model.
+ * Each instance of a WeatherDataMap can hold an ArrayList of WeatherDataCollections.
+ *
+ */
 public class WeatherDataMap {
 
     private List<WeatherDataCollection> weatherMap;
@@ -24,9 +30,10 @@ public class WeatherDataMap {
 
     /**
      * Method that loads all weatherdata on file in a given directory into weatherDataCollections.
+     * The method finds all csv files in the directory, pulls out the name of each station
+     * and passes it to a WeatherDataColelction constructor.
      * @param directory string, The directory where the data files are located
      * @param keepOldCollections boolean, false if old data in map should be cleared.
-     * @return weatherDataCollection
      */
     public void loadCollections(String directory, Boolean keepOldCollections){
 
@@ -48,7 +55,7 @@ public class WeatherDataMap {
         // Create weatherDataCollections for each station
         // Collect station names in stationNames
         for (String station : results) {
-            WeatherDataCollection stationWeather = new WeatherDataCollection(station);
+            WeatherDataCollection stationWeather = new WeatherDataCollection(station, directory);
             weatherMap.add(stationWeather);
             stationNames.add(stationWeather.getStation());
         }
@@ -59,6 +66,7 @@ public class WeatherDataMap {
 
     /**
      * Accessor for weatherDataMap, list of weatherDataCollections currently loaded
+     * @return List of WeatherDataCollection
      * @see WeatherDataCollection
      */
     public List<WeatherDataCollection> getCollections(){
@@ -83,6 +91,7 @@ public class WeatherDataMap {
 
     /**
      * Method that returns the weatherdatacollection for a given station
+     * @param station The station to get WeatherdataCollection for
      * @return weatherDataCollection
      */
     public WeatherDataCollection getCollection(String station){

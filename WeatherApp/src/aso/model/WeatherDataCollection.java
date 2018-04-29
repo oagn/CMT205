@@ -1,11 +1,18 @@
+// Student number: c1767198
+
 package aso.model;
 
 import aso.util.ConvertMonth;
 import java.util.ArrayList;
 import com.opencsv.CSVReader;
 import java.io.FileReader;
-import java.text.DateFormatSymbols;
 
+/**
+ * Class for management of the second level of the WÆTHER app data model.
+ * Each instance of a WeatherDataCollection object can hold all data from file
+ * on a given station.
+ *
+ */
 public class WeatherDataCollection {
 
     private ArrayList<WeatherData> weatherDataList;
@@ -22,13 +29,13 @@ public class WeatherDataCollection {
      * Constructor of weatherDataCollection instance
      * Method to load weather data for a given station into a weather data collection
      * @param station The station to load weather data for
-     * @return an ArrayList containing weather data
+     * @param directory The directory to load data from
      * @see WeatherData
      */
-    public WeatherDataCollection( String station ){
+    public WeatherDataCollection( String station , String directory){
         weatherDataList =  new ArrayList<>();
 
-        try (CSVReader dataReader = new CSVReader(new FileReader("data/" + station +".csv"))) {
+        try (CSVReader dataReader = new CSVReader(new FileReader(directory + station +".csv"))) {
 
             String[] nextLine;
             while ((nextLine = dataReader.readNext()) != null) {
@@ -215,7 +222,7 @@ public class WeatherDataCollection {
     //Average annual af: <average days of air frost per year>
     /**
      * Method to return the average number of air frost days per year for a station.
-     * @return string, the average number of air frost days.
+     * @return string, the average number of air frost days, rounded to nearest day.
      */
     public String getAF(){
         int totalFrostDays = 0;
@@ -238,7 +245,7 @@ public class WeatherDataCollection {
     //Average annual rainfall: <average annual rainfall>
     /**
      * Method to return the average annual rainfall for a station.
-     * @return string, the average rainfall.
+     * @return string, the average rainfall, rounded to nearest 1 decimal place.
      */
     public String getAvgRainFall(){
         int totalRainFall = 0;

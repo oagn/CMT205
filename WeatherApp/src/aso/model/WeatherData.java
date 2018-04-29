@@ -1,5 +1,13 @@
+// Student number: c1767198
+
 package aso.model;
 
+/**
+ * Class that manages the lowest level of the data model.
+ * One instance of the WeatherData class corresponds to one line in
+ * a csv containing weather data for a station and month.
+ *
+ */
 public class WeatherData {
     private String station;
     private int year;
@@ -156,6 +164,9 @@ public class WeatherData {
         this.rainFall = rainFall;
     }
 
+    /**
+     * Custom toString to format printing of a WeatherData object
+     */
     @Override
     public String toString(){
         return "Station: " + getStation() + " (" + getYear() + ", " + getMonth() + "), Temperatures: " + getTempMin()
